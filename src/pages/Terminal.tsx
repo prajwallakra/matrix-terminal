@@ -20,14 +20,14 @@ export default function App() {
       {/* Top Info Bar */}
       <div className="p-4 border-b border-green-700">
         <h1 className="text-2xl font-bold tracking-wider animate-pulse">
-          [ NEONIX TERMINAL v3.1 ]
+          [ SRISTI TERMINAL v3.1 ]
         </h1>
         <p className="text-sm opacity-80">Secure Shell Environment - User: <span className="text-green-300">neo@matrix</span></p>
       </div>
 
       {/* Terminal Body */}
       <div className="flex-1 p-6 overflow-hidden">
-        <p>Welcome to <span className="text-green-300">Neonix OS</span>. All activity is monitored.</p>
+        <p>Welcome to <span className="text-green-300">SRISITI OS</span>. All activity is monitored.</p>
         <p className="mt-2">Type your command below:</p>
 
         {/* Input form */}
@@ -67,7 +67,7 @@ export default function App() {
                 onClick={() => setFullscreen(!fullscreen)}
                 className="px-6 py-1 border border-green-500 hover:bg-green-500 hover:text-black transition-all duration-300"
               >
-                {fullscreen ? "EXIT FULLSCREEN" : "FULLSCREEN"}
+                {/* {fullscreen ? "EXIT FULLSCREEN" : "FULLSCREEN"} */}
               </button>
             </div>
           </div>
