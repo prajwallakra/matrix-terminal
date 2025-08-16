@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export default function App() {
   const [input, setInput] = useState("");
   const [popup, setPopup] = useState<string | null>(null);
-  const [fullscreen, setFullscreen] = useState(false);
 
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault();
@@ -15,6 +14,38 @@ export default function App() {
     }
   };
 
+  // 🔥 Fullscreen toggle logic
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((err) => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    }
+  };
+
+  // Exit fullscreen
+  const exitFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  };
+
+  // 🔥 Listen for key presses (Ctrl + K and Escape)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        toggleFullscreen();
+      }
+      if (e.key === "Escape") {
+        exitFullscreen();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <div className="w-screen h-screen bg-black text-green-400 font-mono flex flex-col border-8 border-green-600">
       {/* Top Info Bar */}
@@ -22,12 +53,18 @@ export default function App() {
         <h1 className="text-2xl font-bold tracking-wider animate-pulse">
           [ SRISTI TERMINAL v3.1 ]
         </h1>
-        <p className="text-sm opacity-80">Secure Shell Environment - User: <span className="text-green-300">neo@matrix</span></p>
+        <p className="text-sm opacity-80">
+          Secure Shell Environment - User:{" "}
+          <span className="text-green-300">neo@matrix</span>
+        </p>
       </div>
 
       {/* Terminal Body */}
       <div className="flex-1 p-6 overflow-hidden">
-        <p>Welcome to <span className="text-green-300">SRISITI OS</span>. All activity is monitored.</p>
+        <p>
+          Welcome to <span className="text-green-300">SRISITI OS</span>. All
+          activity is monitored.
+        </p>
         <p className="mt-2">Type your command below:</p>
 
         {/* Input form */}
@@ -46,30 +83,16 @@ export default function App() {
       {/* Error Popup */}
       {popup && (
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-90">
-          <div
-            className={`${
-              fullscreen
-                ? "w-full h-full flex flex-col items-center justify-center"
-                : "border border-green-500 px-8 py-6"
-            } bg-black text-green-400 font-mono shadow-[0_0_25px_rgba(0,255,0,0.8)] animate-pulse`}
-          >
+          <div className="border border-green-500 px-8 py-6 bg-black text-green-400 font-mono shadow-[0_0_25px_rgba(0,255,0,0.8)] animate-pulse">
             <h2 className="text-lg mb-2 tracking-widest">[ SYSTEM ERROR ]</h2>
             <p className="mb-4">{popup}</p>
 
-            <div className="flex gap-4">
-              <button
-                onClick={() => setPopup(null)}
-                className="px-6 py-1 border border-green-500 hover:bg-green-500 hover:text-black transition-all duration-300"
-              >
-                OK
-              </button>
-              <button
-                onClick={() => setFullscreen(!fullscreen)}
-                className="px-6 py-1 border border-green-500 hover:bg-green-500 hover:text-black transition-all duration-300"
-              >
-                {/* {fullscreen ? "EXIT FULLSCREEN" : "FULLSCREEN"} */}
-              </button>
-            </div>
+            <button
+              onClick={() => setPopup(null)}
+              className="px-6 py-1 border border-green-500 hover:bg-green-500 hover:text-black transition-all duration-300"
+            >
+              OK
+            </button>
           </div>
         </div>
       )}
