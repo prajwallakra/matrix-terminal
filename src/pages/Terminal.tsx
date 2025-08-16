@@ -9,7 +9,7 @@ export default function App() {
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault();
     if (input.trim() !== "") {
-      setPopup(`command "${input}" not found. Access Denied.`);
+      setPopup(`"${input}" not found. Access Denied.`);
       setInput("");
     }
   };
@@ -55,21 +55,21 @@ export default function App() {
         </h1>
         <p className="text-sm opacity-80">
           Secure Shell Environment - User:{" "}
-          <span className="text-green-300">neo@matrix</span>
+          <span className="text-green-300">user@neo</span>
         </p>
       </div>
 
       {/* Terminal Body */}
       <div className="flex-1 p-6 overflow-hidden">
         <p>
-          Welcome to <span className="text-green-300">SRISITI OS</span>. All
+          Welcome to <span className="text-green-300">SRISTI OS</span>. All
           activity is monitored.
         </p>
         <p className="mt-2">Type your command below:</p>
 
         {/* Input form */}
         <form onSubmit={handleCommand} className="mt-4 flex items-center gap-2">
-          <span className="text-green-300">neo@matrix:~$</span>
+          <span className="text-green-300">user@neo:~$</span>
           <input
             type="text"
             value={input}
